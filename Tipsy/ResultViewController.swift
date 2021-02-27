@@ -9,6 +9,9 @@
 import UIKit
 
 class ResultViewController: UIViewController {
+    var result = ""
+    var tip = 0.0
+    var split = ""
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var settingsLabel: UILabel!
     

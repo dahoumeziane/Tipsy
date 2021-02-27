@@ -18,10 +18,15 @@ class CalculateController: UIViewController {
      
     
     var tip = 0.10
+    var numberOfPeople = 2
+    var billTotal = 0.0
+    var finalResult = ""
      @IBAction func tipChanged(_ sender: UIButton) {
         zeroPctButton.isSelected = false
         tenPctButton.isSelected = false
         twentyPctButton.isSelected = false
+        
+        billTextField.endEditing(true)
         
         sender.isSelected = true
         
@@ -32,16 +37,35 @@ class CalculateController: UIViewController {
         let buttonTitleAsNumber = Double(buttonTitleMinusPercentsign)!
         
         tip = buttonTitleAsNumber / 100
+        
      }
      
-     @IBAction func stripperValueChanged(_ sender: UIButton) {
+     @IBAction func stripperValueChanged(_ sender: UIStepper) {
+        splitNumberLabel.text =
+            String(format:"%.0f", sender.value)
+        numberOfPeople = Int(sender.value)
          
      }
      @IBAction func calculatePressed(_ sender: UIButton) {
-        print(tip)
-         
-     }
+        let bill = billTextField.text!
+        if bill != "" {
+            billTotal = Double(bill)!
+            
+            let result = billTotal * (1 + tip ) / Double(numberOfPeople)
+            finalResult = String(
+                format :"%.2f", result)
+            
+        }
+        self.performSegue(withIdentifier: "toResultSegue", sender: self)
+    }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "toResultSegue"){
+            let destinationVC = segue.destination as! ResultViewController
+            destinationVC.result = finalResult
+            destinationVC.tip = Int(tip * 100)
+        }
+    }
 
     /*
     // MARK: - Navigation
