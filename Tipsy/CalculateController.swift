@@ -64,6 +64,7 @@ class CalculateController: UIViewController {
             let destinationVC = segue.destination as! ResultViewController
             destinationVC.result = finalResult
             destinationVC.tip = Int(tip * 100)
+            destinationVC.split = numberOfPeople
         }
     }
 
